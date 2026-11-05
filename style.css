@@ -1,144 +1,289 @@
-/* Global reset & box sizing */
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* Base page styles */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f1f1f1;
-  padding: 20px;
+:root {
+  --nasa-blue: #0B3D91;
+  --nasa-red: #E4002B;
+  --space: #212121;
+  --ink: #061f4a;
+  --muted: #59677f;
+  --surface: #ffffff;
+  --button: #046b99;
 }
 
-/* Centered container */
+body {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--surface);
+  padding: 1.25rem;
+}
+
 .container {
-  max-width: 1200px;
+  max-width: 75rem;
   margin: 0 auto;
 }
 
-/* Header */
 .site-header {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  margin-bottom: 1.25rem;
 }
 
 h1 {
-  font-family: Verdana, sans-serif;
-  font-weight: bold;
-  color: #212121;
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  color: var(--nasa-blue);
 }
 
-/* Logo */
 .logo {
-  width: 140px;
-  margin-right: 15px;
+  width: clamp(6rem, 20vw, 9rem);
 }
 
-/* Date‐picker & button row */
+.fact-card {
+  max-width: 45rem;
+  margin: 0 auto 1.5rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  color: white;
+  text-align: center;
+  background: var(--space);
+  border-top: 0.35rem solid var(--nasa-red);
+  border-radius: 0.75rem;
+}
+
+.fact-card h2 {
+  margin-bottom: 0.5rem;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.fact-card p:last-child {
+  color: #dce8ff;
+  line-height: 1.6;
+}
+
+.eyebrow,
+.media-label {
+  margin-bottom: 0.5rem;
+  color: var(--nasa-red);
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 0.12em;
+}
+
 .filters {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.75rem;
   justify-content: center;
-  margin-bottom: 20px;
-  padding: 0 20px;
+  margin-bottom: 1.5rem;
 }
 
-/* Inputs and buttons */
 input[type="date"],
 button {
-  font-family: Arial, sans-serif;
-  font-weight: normal;
-  color: #666;
-  padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
+  font-family: "Inter", sans-serif;
+  padding: 0.75rem 1rem;
+  border: 0.1rem solid #b8c2d3;
+  border-radius: 0.35rem;
+  font-size: 1rem;
   line-height: 1.4;
   width: 100%;
 }
 
-/* Button specific */
 button {
-  background-color: #d3d3d3;
-  color: black;
+  color: white;
+  background-color: var(--button);
   cursor: pointer;
 }
+
 button:hover {
-  background-color: #bfbfbf;
+  background-color: #092f70;
 }
 
-/* Stack horizontally on wider screens */
-@media (min-width: 600px) {
+button:focus-visible,
+a:focus-visible {
+  outline: 0.2rem solid var(--nasa-red);
+  outline-offset: 0.15rem;
+}
+
+@media (min-width: 38rem) {
   .filters {
     flex-direction: row;
-    padding: 0;
   }
-  
+
   input[type="date"],
   button {
     width: auto;
   }
 }
 
-/* Gallery flex container */
 .gallery {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px;
+  gap: 1.25rem;
   justify-content: center;
 }
 
-/* Gallery items */
 .gallery-item {
-  flex: 1 1 100%;  /* full width by default */
-  min-width: 280px;
-  max-width: 500px;
-  background: white;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  flex: 1 1 100%;
+  max-width: 35rem;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  background: var(--surface);
+  border-radius: 0.75rem;
+  box-shadow: 0 0.35rem 1rem rgba(11, 61, 145, 0.12);
 }
 
-/* Three columns on wider screens */
-@media (min-width: 1000px) {
-  .gallery-item {
-    flex: 0 1 31%;
-  }
+.image-button {
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  overflow: hidden;
+  background: transparent;
 }
 
 .gallery-item img {
+  display: block;
   width: 100%;
-  height: 200px;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
-  border-radius: 4px;
+  transition: transform 0.35s ease;
 }
 
-.gallery-item p {
-  margin-top: 10px;
-  padding: 5px;
-  font-size: 14px;
+.image-button:hover img,
+.image-button:focus-visible img {
+  transform: scale(1.06);
 }
 
-/* Placeholder content */
+.card-copy {
+  padding: 1rem;
+}
+
+.card-copy h2 {
+  color: var(--nasa-blue);
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.card-date,
+.modal-date {
+  margin-top: 0.35rem;
+  color: var(--muted);
+}
+
+.video-art {
+  display: grid;
+  min-height: 12rem;
+  place-items: center;
+  color: white;
+  font-size: 3rem;
+  background: linear-gradient(135deg, var(--space), var(--nasa-blue));
+}
+
+.video-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--nasa-blue);
+  font-weight: bold;
+}
+
 .placeholder {
   flex: 1 1 100%;
+  padding: 3rem 1rem;
+  color: var(--muted);
   text-align: center;
-  padding: 40px;
-  color: #666;
 }
 
 .placeholder-icon {
-  font-size: 48px;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
+  font-size: 3rem;
+}
+
+@media (min-width: 60rem) {
+  .gallery-item {
+    flex-basis: 30%;
+  }
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 11, 24, 0.82);
+}
+
+.modal-content {
+  position: relative;
+  z-index: 1;
+  max-width: 60rem;
+  max-height: 95vh;
+  overflow: auto;
+  background: var(--surface);
+  border-radius: 0.75rem;
+}
+
+.modal-content > img {
+  display: block;
+  width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  background: var(--space);
+}
+
+.modal-copy {
+  padding: clamp(1rem, 4vw, 2rem);
+}
+
+.modal-copy h2 {
+  color: var(--nasa-blue);
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.modal-copy > p:last-child {
+  margin-top: 1rem;
+  line-height: 1.7;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 2;
+  width: 2.5rem;
+  padding: 0.2rem;
+  color: white;
+  font-size: 1.75rem;
+  line-height: 1;
+  background: rgba(5, 11, 24, 0.8);
+  border: 0;
+  border-radius: 50%;
+}
+
+.modal-open {
+  overflow: hidden;
 }
