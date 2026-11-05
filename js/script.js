@@ -9,7 +9,7 @@ const modalImage = document.getElementById('modalImage');
 const modalTitle = document.getElementById('modalTitle');
 const modalDate = document.getElementById('modalDate');
 const modalExplanation = document.getElementById('modalExplanation');
-const API_URL = 'https://science.nasa.gov/wp-json/wp/v2/apod-basic/?api_key=DEMO_KEY';
+const API_URL = 'https://science.nasa.gov/wp-json/wp/v2/apod-basic';
 
 const spaceFacts = [
   'A day on Venus is longer than a year on Venus.',
@@ -109,10 +109,15 @@ function closeModal() {
   document.body.classList.remove('modal-open');
 }
 
+// Load space images from NASA's API based on the selected date range
 async function loadSpaceImages(event) {
   event.preventDefault();
-  const startDate = startInput.value;
-  const endDate = endInput.value;
+  // Convert the date input values to strings in YYMMDD format
+  const startDate = startInput.value.replace(/-/g, '').slice(2);
+  const endDate = endInput.value.replace(/-/g, '').slice(2);
+  
+  const filteredStartDate = startInput.value.replace(/-/g, '').slice(2);
+  const filteredEndDate = endInput.value.replace(/-/g, '').slice(2);
 
   if (!startDate || !endDate || startDate > endDate) {
     showMessage('Please choose a valid date range.', '⚠️');
@@ -122,22 +127,25 @@ async function loadSpaceImages(event) {
   showMessage('Loading space photos…', '🔄');
 
   try {
-    const response = await fetch(API_URL);
+    const query = new URLSearchParams({
+      date_from: filteredStartDate,
+      date_to: filteredEndDate,
+      api_key: 'DEMO_KEY'
+    });
+    
+    const response = await fetch(`${API_URL}?${query}`);
     if (!response.ok) {
       throw new Error(`NASA API returned ${response.status}`);
     }
 
-    const entries = await response.json();
-    const selectedEntries = entries
-      .filter((entry) => entry.date >= startDate && entry.date <= endDate)
-      .sort((first, second) => second.date.localeCompare(first.date));
-
-    if (selectedEntries.length === 0) {
+    const responseData = await response.json();
+    
+    if (responseData.length === 0) {
       showMessage('No photos were found for that range. Try a more recent date range.', '🌌');
       return;
     }
 
-    gallery.replaceChildren(...selectedEntries.map(createGalleryItem));
+    gallery.replaceChildren(...responseData.map(createGalleryItem));
   } catch (error) {
     console.error('Unable to load NASA space photos:', error);
     showMessage('We could not load the space photos. Please try again.', '⚠️');
